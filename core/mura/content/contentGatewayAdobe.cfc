@@ -2404,6 +2404,8 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfargument name="limit" type="numeric" required="true" default="5">
 	<cfargument name="startDate" type="string" required="true" default="">
 	<cfargument name="stopDate" type="string" required="true" default="">
+	<cfargument name="subtype" type="string" required="false" default="">
+	<cfargument name="parentid" type="string" required="false" default="">
 
 	<cfset var rsRecentUpdate= ''/>
 	<cfset var dbType=variables.configBean.getDbType() />
@@ -2416,6 +2418,13 @@ version 2 without this exception.  You may, if you choose, apply this exception 
 	<cfif arguments.siteID neq ''>
 	and siteid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.siteID#"/>
 	</cfif>
+	<cfif arguments.subtype neq ''>
+	and subtype=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.subtype#"/>
+	</cfif>
+	<cfif arguments.parentid neq ''>
+	and parentid=<cfqueryparam cfsqltype="cf_sql_varchar" value="#arguments.parentid#"/>
+	</cfif>
+
 
 	<cfif isdate(arguments.stopDate)>and lastUpdate <=  <cfqueryparam cfsqltype="#renderDateTimeParamType()#" value="#createDateTime(year(arguments.stopDate),month(arguments.stopDate),day(arguments.stopDate),23,59,0)#"></cfif>
 	<cfif isdate(arguments.startDate)>and lastUpdate >=  <cfqueryparam cfsqltype="#renderDateTimeParamType()#" value="#createDateTime(year(arguments.startDate),month(arguments.startDate),day(arguments.startDate),0,0,0)#"></cfif>
